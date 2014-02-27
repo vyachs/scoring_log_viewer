@@ -1,0 +1,5 @@
+/analyzed_logs/*
+/.idea/*
+database.yml
+.ruby-gemset
+.ruby-version
