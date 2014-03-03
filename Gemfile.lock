@@ -39,6 +39,7 @@ GEM
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
     tzinfo (0.3.38)
+    will_paginate (3.0.5)
 
 PLATFORMS
   ruby
@@ -47,3 +48,4 @@ DEPENDENCIES
   haml
   mysql2
   sinatra-activerecord
+  will_paginate

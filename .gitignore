@@ -3,3 +3,4 @@
 database.yml
 .ruby-gemset
 .ruby-version
+/bash_history_files/*

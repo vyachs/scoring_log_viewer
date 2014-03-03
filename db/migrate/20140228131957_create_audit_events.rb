@@ -6,6 +6,7 @@ class CreateAuditEvents < ActiveRecord::Migration
       t.string :ip
       t.string :time_moment
       t.string :kind
+      t.timestamps
     end
   end
 end

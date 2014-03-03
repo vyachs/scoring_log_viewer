@@ -1,0 +1,16 @@
+= will_paginate @audit_events
+%br
+%table
+  %tr
+    %th{ width: 100 } Тип
+    %th Имя пользователя
+    %th{ width: 130 } IP
+    %th{ width: 120 } Время
+    %th{ width: 150 } Сервер
+  - @audit_events.each do |a_event|
+    %tr
+      %td= a_event.kind
+      %td= a_event.user_name
+      %td= a_event.ip
+      %td= a_event.time_moment
+      %td= a_event.server_name

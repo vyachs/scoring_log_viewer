@@ -1,1 +1,10 @@
-= @bash_history
+- @bash_files_list.each do |bf|
+  %a{ href: "/bash_history?file_name=#{bf}" }= bf
+  &nbsp;
+%br
+%br
+%strong
+  = @current_bash_file
+%br
+%br
+= @bash_file_content

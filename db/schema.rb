@@ -13,11 +13,13 @@
 ActiveRecord::Schema.define(version: 20140228131957) do
 
   create_table "audit_events", force: true do |t|
-    t.string "server_name"
-    t.string "user_name"
-    t.string "ip"
-    t.string "time_moment"
-    t.string "kind"
+    t.string   "server_name"
+    t.string   "user_name"
+    t.string   "ip"
+    t.string   "time_moment"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

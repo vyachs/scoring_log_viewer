@@ -1,5 +1,7 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'will_paginate'
+require 'will_paginate/active_record'
 
 Dir.glob('./{models}/*.rb').each { |file| require file }
 
@@ -26,6 +28,24 @@ post '/search_in_production_log' do
 end
 
 get '/bash_history' do
-  @bash_history = File.read('analyzed_logs/bash_history').gsub("\n", '<br>')
+  bash_dir = 'bash_history_files/'
+  @bash_files_list = Dir.glob("#{bash_dir}*").map { |f_path| f_path.split('/').last }
+  @current_bash_file = params[:file_name] || @bash_files_list[0]
+  @bash_file_content = File.read(bash_dir + @current_bash_file).gsub("\n", '<br>')
   haml :bash_history, layout: :main
+end
+
+get '/parse_audit_logs' do
+  begin
+    result = 'OK'
+    AuditEvent.analyze_log_files
+  rescue => e
+    result = "#{e.message} #{e.backtrace}"
+  end
+  result
+end
+
+get '/audit' do
+  @audit_events = AuditEvent.order('id DESC').paginate(page: params[:page], per_page: 30)
+  haml :audit, layout: :main
 end
