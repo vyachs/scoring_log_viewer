@@ -1,16 +1,20 @@
-= will_paginate @audit_events
+%form{ method: 'post',  action: @path, :'accept-charset' => 'UTF-8' }
+  Интервал времени &nbsp;
+  %input{ type: 'text', name: 'start_time', value: params[:start_time] }
+  &nbsp-&nbsp
+  %input{ type: 'text', name: 'end_time', value: params[:end_time] }
+  %input{ type: 'submit', value: 'Найти' }
+= will_paginate @logins, params: ({ start_time: params[:start_time], end_time: params[:end_time] } if params[:start_time].present?)
 %br
 %table
   %tr
-    %th{ width: 100 } Тип
     %th Имя пользователя
     %th{ width: 130 } IP
-    %th{ width: 120 } Время
+    %th{ width: 170 } Время
     %th{ width: 150 } Сервер
-  - @audit_events.each do |a_event|
+  - @logins.each do |f_login|
     %tr
-      %td= a_event.kind
-      %td= a_event.user_name
-      %td= a_event.ip
-      %td= a_event.time_moment
-      %td= a_event.server_name
+      %td= f_login.user_name
+      %td= f_login.ip
+      %td= f_login.time_moment.strftime('%Y-%m-%d %H:%M:%S')
+      %td= f_login.server_name

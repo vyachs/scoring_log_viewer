@@ -7,6 +7,23 @@ Dir.glob('./{models}/*.rb').each { |file| require file }
 
 set :database_file, 'database.yml'
 
+def get_or_post(path, opts={}, &block)
+  get(path, opts, &block)
+  post(path, opts, &block)
+end
+
+def logins_list(kind)
+  @path = request.path_info
+  @logins = AuditEvent.where(kind: kind)
+                      .order('time_moment DESC')
+                      .paginate(page: params[:page], per_page: 30)
+  if params[:start_time].present?
+    @logins = @logins.where(time_moment: DateTime.parse(params[:start_time])..DateTime.parse(params[:end_time]))
+  end
+  haml :audit, layout: :main
+end
+
+
 get '/' do
   haml '', layout: :main
 end
@@ -36,6 +53,7 @@ get '/bash_history' do
 end
 
 get '/parse_audit_logs' do
+  # передавать год
   begin
     result = 'OK'
     AuditEvent.analyze_log_files
@@ -45,7 +63,14 @@ get '/parse_audit_logs' do
   result
 end
 
-get '/audit' do
-  @audit_events = AuditEvent.order('id DESC').paginate(page: params[:page], per_page: 30)
-  haml :audit, layout: :main
+get_or_post '/audit' do
+  logins_list('successful_login')
+end
+
+get_or_post '/failed_logins' do
+  logins_list('failed_login')
+end
+
+get '/penetrations' do
+
 end

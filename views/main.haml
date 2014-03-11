@@ -4,12 +4,16 @@
     %meta{ content: 'text/html; charset=utf-8', 'http-equiv' => 'Content-Type' }
     %title Scoring Log Viewer
     %body
-      %a{ href: '/code_changes' } Изменения в коде
+      -#%a{ href: '/code_changes' } Изменения в коде
+      -#&nbsp;
+      -#%a{ href: '/open_search_form' } Поиск строки в логе
+      -#&nbsp;
+      -#%a{ href: '/bash_history' } История команд консоли
+      -#&nbsp;
+      %a{ href: '/audit' } Успешные входы
       &nbsp;
-      %a{ href: '/open_search_form' } Поиск строки в логе
+      %a{ href: '/failed_logins' } Неуспешные попытки входа
       &nbsp;
-      %a{ href: '/bash_history' } История команд консоли
-      &nbsp;
-      %a{ href: '/audit' } Аудит
+      %a{ href: '/penetrations' } Обнаружение вторжений
       %hr
       = yield
