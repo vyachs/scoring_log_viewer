@@ -53,10 +53,9 @@ get '/bash_history' do
 end
 
 get '/parse_audit_logs' do
-  # передавать год
   begin
     result = 'OK'
-    AuditEvent.analyze_log_files
+    AuditEvent.analyze_log_files(params[:year])
   rescue => e
     result = "#{e.message} #{e.backtrace}"
   end
