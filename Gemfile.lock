@@ -25,6 +25,9 @@ GEM
     minitest (4.7.5)
     multi_json (1.8.4)
     mysql2 (0.3.15)
+    net-scp (1.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.8.0)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
@@ -47,5 +50,7 @@ PLATFORMS
 DEPENDENCIES
   haml
   mysql2
+  net-scp
+  net-ssh
   sinatra-activerecord
   will_paginate

@@ -6,7 +6,7 @@
   %input{ type: 'submit', value: 'Найти' }
 = will_paginate @logins, params: ({ start_time: params[:start_time], end_time: params[:end_time] } if params[:start_time].present?)
 %br
-%table
+%table{ border: '1' }
   %tr
     %th Имя пользователя
     %th{ width: 130 } IP

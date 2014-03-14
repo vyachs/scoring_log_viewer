@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140228131957) do
+ActiveRecord::Schema.define(version: 20140314071824) do
 
   create_table "audit_events", force: true do |t|
     t.string   "server_name"
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 20140228131957) do
     t.string   "ip"
     t.datetime "time_moment"
     t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "penetrations", force: true do |t|
+    t.string   "server_name"
+    t.string   "vulnerability"
+    t.string   "attacker_ip"
+    t.string   "attacked_ip"
+    t.datetime "time_moment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

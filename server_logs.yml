@@ -1,0 +1,11 @@
+---
+- host: host_ip
+  user: user_name
+  port: 5555
+  files:
+  - source_path: /var/www/railsapps/application/current/log/delayed_job.log
+    dest_path: /tmp/delayed_job_diff.log
+    amount_of_lines: 130050
+  - source_path: /var/www/railsapps/application/current/log/newrelic_agent.log
+    dest_path: /tmp/newrelic_agent_diff.log
+    amount_of_lines: 148652

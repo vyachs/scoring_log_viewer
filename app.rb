@@ -62,6 +62,16 @@ get '/parse_audit_logs' do
   result
 end
 
+get '/parse_snort_logs' do
+  begin
+    result = 'OK'
+    Penetration.analyze_log_files(params[:year])
+  rescue => e
+    result = "#{e.message} #{e.backtrace}"
+  end
+  result
+end
+
 get_or_post '/audit' do
   logins_list('successful_login')
 end
@@ -70,6 +80,10 @@ get_or_post '/failed_logins' do
   logins_list('failed_login')
 end
 
-get '/penetrations' do
-
+get_or_post '/penetrations' do
+  @penetrations = Penetration.order('time_moment DESC').paginate(page: params[:page], per_page: 30)
+  if params[:start_time].present?
+    @penetrations = @penetrations.where(time_moment: DateTime.parse(params[:start_time])..DateTime.parse(params[:end_time]))
+  end
+  haml :penetrations, layout: :main
 end
