@@ -1,0 +1,9 @@
+%br
+%table{ border: '1' }
+  %tr
+    %th Файл
+    %th Изменение
+  - @aide_changes.each do |i|
+    %tr
+      %td= i.file_name
+      %td= {1 => 'Создан', 2 => 'Изменен', 3 => 'Удален'}[i.action]

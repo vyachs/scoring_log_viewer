@@ -72,6 +72,26 @@ get '/parse_snort_logs' do
   result
 end
 
+get '/parse_iptables' do
+  begin
+    result = 'OK'
+    Iptable.analyze_log_files
+  rescue => e
+    result = "#{e.message} #{e.backtrace}"
+  end
+  result
+end
+
+get '/parse_aide' do
+  begin
+    result = 'OK'
+    ReportDay.analyze_log_files
+  rescue => e
+    result = "#{e.message} #{e.backtrace}"
+  end
+  result
+end
+
 get_or_post '/audit' do
   logins_list('successful_login')
 end
@@ -86,4 +106,22 @@ get_or_post '/penetrations' do
     @penetrations = @penetrations.where(time_moment: DateTime.parse(params[:start_time])..DateTime.parse(params[:end_time]))
   end
   haml :penetrations, layout: :main
+end
+
+get_or_post '/iptables' do
+  @iptables = Iptable.order('time_moment DESC').paginate(page: params[:page], per_page: 30)
+  if params[:start_time].present?
+    @iptables = @iptables.where(time_moment: DateTime.parse(params[:start_time])..DateTime.parse(params[:end_time]))
+  end
+  haml :iptables, layout: :main
+end
+
+get_or_post '/aide' do
+  @report_days = ReportDay.order('time_moment DESC').paginate(page: params[:page], per_page: 30)
+  haml :report_days, layout: :main
+end
+
+get '/aide/:id' do
+  @aide_changes = ReportDay.find(params[:id]).aide_changes
+  haml :aide_changes, layout: :main
 end

@@ -10,14 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314071824) do
+ActiveRecord::Schema.define(version: 20140321101646) do
+
+  create_table "aide_changes", force: true do |t|
+    t.integer  "report_day_id"
+    t.string   "file_name"
+    t.integer  "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "audit_events", force: true do |t|
     t.string   "server_name"
     t.string   "user_name"
     t.string   "ip"
-    t.datetime "time_moment"
+    t.string   "time_moment"
     t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "iptables", force: true do |t|
+    t.string   "server_name"
+    t.integer  "src_ip"
+    t.datetime "time_moment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +44,16 @@ ActiveRecord::Schema.define(version: 20140314071824) do
     t.string   "attacker_ip"
     t.string   "attacked_ip"
     t.datetime "time_moment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "report_days", force: true do |t|
+    t.datetime "time_moment"
+    t.string   "server_name"
+    t.integer  "total_added",   default: 0
+    t.integer  "total_removed", default: 0
+    t.integer  "total_changed", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

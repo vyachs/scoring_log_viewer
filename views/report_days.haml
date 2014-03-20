@@ -1,0 +1,19 @@
+= will_paginate @report_days
+%br
+%table{ border: '1' }
+  %tr
+    %th Сервер
+    %th Дата
+    %th Добавлено
+    %th Изменено
+    %th Удалено
+    %th
+  - @report_days.each do |i|
+    %tr
+      %td= i.server_name
+      %td= i.time_moment.strftime('%Y-%m-%d %H:%M:%S')
+      %td= i.total_added
+      %td= i.total_changed
+      %td= i.total_removed
+      %td
+        %a{href: "/aide/#{i.id}"} Подробнее
