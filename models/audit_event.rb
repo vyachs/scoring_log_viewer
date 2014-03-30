@@ -1,7 +1,7 @@
 class AuditEvent < ActiveRecord::Base
   def self.analyze_log_files
     #%w(frontend_audit support_audit db_audit app_audit).each do |file_name|
-    %w(f_end_audit).each do |file_name|
+    %w(support_audit front_audit app_audit db_audit).each do |file_name|
       analyze_log_file(file_name)
     end
   end

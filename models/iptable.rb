@@ -3,13 +3,13 @@ require 'ipaddr'
 
 class Iptable < ActiveRecord::Base
   def self.analyze_log_files
-    %w(kern_diff).each do |file_name|
+    %w(support_iptables front_iptables).each do |file_name|
       analyze_log_file(file_name)
     end
   end
 
   def self.analyze_log_file(file_name)
-    File.open("analyzed_logs/#{file_name}.log") do |f|
+    File.open("analyzed_logs/#{file_name}_diff.log") do |f|
       str = f.gets
       while str do
         if str.include? 'SRC'

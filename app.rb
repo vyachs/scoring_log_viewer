@@ -38,7 +38,8 @@ get '/open_search_form' do
 end
 
 post '/search_in_production_log' do
-  @search_results = `grep -A 5 -B 5 -m 100 '#{params[:search_string]}' analyzed_logs/scoring.log`.
+  @search_results = `tail -1000000 /var/log/scoring.log | grep -A 5 -B 5 -m 2000 '#{params[:search_string]}' `.
+                    force_encoding('UTF-8').encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '').
                     gsub(params[:search_string], "<b>#{params[:search_string]}</b>").
                     split("\n--\n")
   haml :search_in_production_log, layout: :main
@@ -48,7 +49,8 @@ get '/bash_history' do
   bash_dir = 'bash_history_files/'
   @bash_files_list = Dir.glob("#{bash_dir}*").map { |f_path| f_path.split('/').last }
   @current_bash_file = params[:file_name] || @bash_files_list[0]
-  @bash_file_content = File.read(bash_dir + @current_bash_file).gsub("\n", '<br>')
+  @bash_file_content = File.read(bash_dir + @current_bash_file).force_encoding('UTF-8').encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '').gsub("\n", '<br>')
+    #File.read(bash_dir + @current_bash_file).gsub("\n", '<br>')
   haml :bash_history, layout: :main
 end
 
