@@ -55,7 +55,7 @@ end
 get '/parse_audit_logs' do
   begin
     result = 'OK'
-    AuditEvent.analyze_log_files(params[:year])
+    AuditEvent.analyze_log_files
   rescue => e
     result = "#{e.message} #{e.backtrace}"
   end
